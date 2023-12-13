@@ -150,3 +150,4 @@ SUBSCRIPTION_PRICE = int(os.getenv("SUBSCRIPTION_PRICE"))
 CHANEL_ID = os.getenv("CHANEL_ID")
 CHANEL_LINK = os.getenv("CHANEL_LINK")
 GPT_TOKEN = os.getenv("GPT_TOKEN")
+ADMIN_TG_IDS = os.getenv("ADMIN_TG_IDS").split(", ")  # type:ignore

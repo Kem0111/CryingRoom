@@ -25,8 +25,7 @@ services:
       - .env
     volumes:
       - media:/code/media
-    depends_on:
-      - admin
+
 
   db:
     image: postgres:latest

@@ -5,6 +5,7 @@ from bot.handlers.subscription import is_active_subscription
 from bot.keyboards import cancel_kb, question_kb, set_commands
 from bot.models import TgUser
 from bot.config import bot_messages, client
+from package.settings import ADMIN_TG_IDS
 from aiogram.filters import CommandStart
 from aiogram.exceptions import TelegramBadRequest
 from aiogram.fsm.context import FSMContext
@@ -21,7 +22,8 @@ async def on_start(message: Union[types.Message, types.CallbackQuery],
         user_name=message.from_user.username
     )
 
-    if await is_active_subscription(message.from_user.id):
+    if await is_active_subscription(message.from_user.id) or \
+            message.from_user.id in ADMIN_TG_IDS:
 
         if isinstance(message, types.Message):
             await message.answer(bot_messages['get_chat_gpt'],
@@ -46,7 +48,8 @@ async def gpt_talk_handler(call: types.CallbackQuery, state: FSMContext):
         tg_id=call.from_user.id,
         user_name=call.from_user.username
     )
-    if await is_active_subscription(call.from_user.id):
+    if await is_active_subscription(call.from_user.id) or \
+            call.from_user.id in ADMIN_TG_IDS:
         bot_message = await call.message.edit_text(
             bot_messages['get_question'],
             reply_markup=await cancel_kb()
